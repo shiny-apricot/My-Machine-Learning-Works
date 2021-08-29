@@ -1,12 +1,8 @@
-
 import matplotlib.pyplot as plt
 import seaborn as sns
 import time
 from tensorflow import keras
 import tensorflow as tf
-
-# updatable plot
-# a minimal example (sort of)
 from IPython.display import clear_output
 
 
@@ -32,9 +28,13 @@ class PlotLosses(tf.keras.callbacks.Callback):
         plt.show();
         self.current_time = time.time()
         accuracy = round(logs.get('accuracy'),4)
-        print('ACCURACY=',accuracy)
         val_accuracy = round(logs.get('val_accuracy'), 4)
+        loss = round(logs.get('loss'), 4)
+        val_loss = round(logs.get('val_loss'), 4)
+        print('ACCURACY=',accuracy)
         print('VAL_ACCURACY=',val_accuracy)
+        print('LOSS=',loss)
+        print('VAL_LOSS=',val_loss)
     #
     def on_train_begin(self, logs={}):
         self.i = 0
@@ -65,6 +65,6 @@ class PlotLosses(tf.keras.callbacks.Callback):
         return plt
     #
     def on_train_end(self, logs=None):
-        self.plot_figure()
+        self.plot_figure(logs)
 
     #Callback Source = https://gist.github.com/stared/dfb4dfaf6d9a8501cd1cc8b8cb806d2e
